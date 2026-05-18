@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* CEDSI Engineering Theme - Dark Mode Dominant */
+:root {
+  /* Mostly monochromatic base with deep blue accents */
+  --background: #0c0a34;
+  --foreground: #f4f5f8;
+  
+  /* Card surfaces - slightly lighter than background */
+  --card: #0000001a;
+  --card-foreground: #f4f5f8;
+  
+  --popover: #1d1f27;
+  --popover-foreground: #f4f5f8;
+  
+  --primary: #FFFFFF;
+  --primary-foreground: #2a2d37;
+  
+  --secondary: #232630;
+  --secondary-foreground: #f4f5f8;
+  
+  /* Muted elements */
+  --muted: #2a2d37;
+  --muted-foreground: #b5b9c3;
+  
+  --accent: #002f5d;
+  --accent-foreground: #f4f5f8;
+  
+  --destructive: #c73a40;
+  --destructive-foreground: #f4f5f8;
+  
+  /* Borders and inputs */
+  --border: #3b3f4a;
+  --input: #242730;
+  --ring: #002f5d;
+  
+  /* Chart colors */
+  --chart-1: #002f5d;
+  --chart-2: #13104f;
+  --chart-3: #4b5160;
+  --chart-4: #7a818f;
+  --chart-5: #a9afbb;
+  
+  --radius: 0.5rem;
+  
+  /* Sidebar */
+  --sidebar: #191b23;
+  --sidebar-foreground: #f4f5f8;
+  --sidebar-primary: #002f5d;
+  --sidebar-primary-foreground: #f4f5f8;
+  --sidebar-accent: #272a34;
+  --sidebar-accent-foreground: #f4f5f8;
+  --sidebar-border: #3b3f4a;
+  --sidebar-ring: #002f5d;
+
+  /* Typography */
+  --heading-color: #ffffff;
+  --paragraph-color: #b5b9c3;
+  --heading-font-weight: 700;
+  --paragraph-line-height: 1.7;
+}
+
+@theme inline {
+  --font-sans: 'Inter', 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+    font-weight: var(--heading-font-weight);
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--paragraph-color);
+    line-height: var(--paragraph-line-height);
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #191b23;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b3f4a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5160;
+}
+
+/* Grid background pattern */
+.grid-pattern {
+  background-image: 
+    linear-gradient(to right, #4b51604d 1px, transparent 1px),
+    linear-gradient(to bottom, #4b51604d 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Glow effect for accent elements */
+.glow-cyan {
+  box-shadow: 0 0 20px #002f5d66,
+              0 0 40px #002f5d33;
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow: 0 0 20px #002f5d99;
+}

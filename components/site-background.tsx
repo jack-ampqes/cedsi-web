@@ -2,164 +2,272 @@
 
 import { useEffect, useRef } from "react"
 
+type Particle = {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  baseVx: number
+  baseVy: number
+  size: number
+  opacity: number
+}
+
+const MAX_PARTICLES = 140
+const CONNECTION_DISTANCE = 120
+
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvasElement = canvasRef.current!
+    if (!canvasElement) return
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const drawingContext = canvasElement.getContext("2d")!
+    if (!drawingContext) return
 
-    let animationId: number
-    const mouse = { x: -9999, y: -9999, active: false }
-    let particles: Array<{
-      x: number
-      y: number
-      vx: number
-      vy: number
-      baseVx: number
-      baseVy: number
-      size: number
-      opacity: number
-    }> = []
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    )
+    const pointer = { x: -9999, y: -9999, active: false }
+    let animationFrame: number | null = null
+    let isDocumentVisible = !document.hidden
+    let prefersReducedMotion = reducedMotionQuery.matches
+    let viewportWidth = window.innerWidth
+    let viewportHeight = window.innerHeight
+    let particles: Particle[] = []
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      initParticles()
+    function withAlpha(hex: string, alpha: number) {
+      const clampedAlpha = Math.max(0, Math.min(1, alpha))
+      return `${hex}${Math.round(clampedAlpha * 255)
+        .toString(16)
+        .padStart(2, "0")}`
     }
 
-    const initParticles = () => {
-      particles = []
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000)
-      for (let i = 0; i < particleCount; i++) {
+    function initializeParticles() {
+      const count = Math.min(
+        MAX_PARTICLES,
+        Math.max(32, Math.floor((viewportWidth * viewportHeight) / 22_000))
+      )
+
+      particles = Array.from({ length: count }, () => {
         const baseVx = (Math.random() - 0.5) * 0.3
         const baseVy = (Math.random() - 0.5) * 0.3
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+
+        return {
+          x: Math.random() * viewportWidth,
+          y: Math.random() * viewportHeight,
           vx: baseVx,
           vy: baseVy,
           baseVx,
           baseVy,
           size: Math.random() * 2 + 1,
           opacity: Math.random() * 0.5 + 0.2,
-        })
-      }
+        }
+      })
     }
 
-    const withAlphaHex = (hex: string, alpha: number) => {
-      const clamped = Math.max(0, Math.min(1, alpha))
-      const alphaHex = Math.round(clamped * 255)
-        .toString(16)
-        .padStart(2, "0")
-      return `${hex}${alphaHex}`
-    }
+    function drawScene(updateParticles: boolean) {
+      drawingContext.clearRect(0, 0, viewportWidth, viewportHeight)
+      drawingContext.strokeStyle = "#13104fb5"
+      drawingContext.lineWidth = 1
 
-    const drawParticles = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      ctx.strokeStyle = "#13104fb5"
-      ctx.lineWidth = 1
-      const gridSize = 60
-
-      for (let x = 0; x < canvas.width; x += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, canvas.height)
-        ctx.stroke()
+      for (let x = 0; x < viewportWidth; x += 60) {
+        drawingContext.beginPath()
+        drawingContext.moveTo(x, 0)
+        drawingContext.lineTo(x, viewportHeight)
+        drawingContext.stroke()
       }
 
-      for (let y = 0; y < canvas.height; y += gridSize) {
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(canvas.width, y)
-        ctx.stroke()
+      for (let y = 0; y < viewportHeight; y += 60) {
+        drawingContext.beginPath()
+        drawingContext.moveTo(0, y)
+        drawingContext.lineTo(viewportWidth, y)
+        drawingContext.stroke()
       }
 
-      particles.forEach((particle, i) => {
-        if (mouse.active) {
-          const dxFromMouse = particle.x - mouse.x
-          const dyFromMouse = particle.y - mouse.y
-          const distanceFromMouse = Math.sqrt(
-            dxFromMouse * dxFromMouse + dyFromMouse * dyFromMouse
-          )
-          const repulsionRadius = 80
+      for (let index = 0; index < particles.length; index += 1) {
+        const particle = particles[index]
 
-          if (distanceFromMouse < repulsionRadius && distanceFromMouse > 0) {
-            const strength = (1 - distanceFromMouse / repulsionRadius) * 0.05
-            particle.vx += (dxFromMouse / distanceFromMouse) * strength
-            particle.vy += (dyFromMouse / distanceFromMouse) * strength
+        if (updateParticles) {
+          if (pointer.active) {
+            const pointerX = particle.x - pointer.x
+            const pointerY = particle.y - pointer.y
+            const pointerDistanceSquared = pointerX ** 2 + pointerY ** 2
+            const repulsionRadius = 80
+
+            if (
+              pointerDistanceSquared > 0 &&
+              pointerDistanceSquared < repulsionRadius ** 2
+            ) {
+              const pointerDistance = Math.sqrt(pointerDistanceSquared)
+              const strength = (1 - pointerDistance / repulsionRadius) * 0.05
+              particle.vx += (pointerX / pointerDistance) * strength
+              particle.vy += (pointerY / pointerDistance) * strength
+            }
+          }
+
+          particle.x += particle.vx
+          particle.y += particle.vy
+          particle.vx += (particle.baseVx - particle.vx) * 0.02
+          particle.vy += (particle.baseVy - particle.vy) * 0.02
+
+          if (particle.x < 0 || particle.x > viewportWidth) {
+            particle.vx *= -1
+            particle.x = Math.max(0, Math.min(viewportWidth, particle.x))
+          }
+          if (particle.y < 0 || particle.y > viewportHeight) {
+            particle.vy *= -1
+            particle.y = Math.max(0, Math.min(viewportHeight, particle.y))
           }
         }
 
-        particle.x += particle.vx
-        particle.y += particle.vy
+        drawingContext.beginPath()
+        drawingContext.arc(
+          particle.x,
+          particle.y,
+          particle.size,
+          0,
+          Math.PI * 2
+        )
+        drawingContext.fillStyle = withAlpha(
+          "#ffffff",
+          particle.opacity * 0.5
+        )
+        drawingContext.fill()
 
-        // Ease particles back toward their baseline drift after mouse nudges.
-        particle.vx += (particle.baseVx - particle.vx) * 0.02
-        particle.vy += (particle.baseVy - particle.vy) * 0.02
+        for (
+          let comparisonIndex = index + 1;
+          comparisonIndex < particles.length;
+          comparisonIndex += 1
+        ) {
+          const other = particles[comparisonIndex]
+          const deltaX = particle.x - other.x
+          const deltaY = particle.y - other.y
+          const distanceSquared = deltaX ** 2 + deltaY ** 2
 
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fillStyle = withAlphaHex("#ffffff", particle.opacity * 0.5)
-        ctx.fill()
-
-        particles.slice(i + 1).forEach((other) => {
-          const dx = particle.x - other.x
-          const dy = particle.y - other.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 120) {
-            ctx.beginPath()
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(other.x, other.y)
-            ctx.strokeStyle = withAlphaHex("#ffffff", 0.08 * (1 - distance / 120))
-            ctx.stroke()
+          if (distanceSquared < CONNECTION_DISTANCE ** 2) {
+            const distance = Math.sqrt(distanceSquared)
+            drawingContext.beginPath()
+            drawingContext.moveTo(particle.x, particle.y)
+            drawingContext.lineTo(other.x, other.y)
+            drawingContext.strokeStyle = withAlpha(
+              "#ffffff",
+              0.08 * (1 - distance / CONNECTION_DISTANCE)
+            )
+            drawingContext.stroke()
           }
-        })
-      })
+        }
+      }
+    }
 
-      animationId = requestAnimationFrame(drawParticles)
+    function stopAnimation() {
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = null
+      }
+    }
+
+    function animate() {
+      if (prefersReducedMotion || !isDocumentVisible) {
+        animationFrame = null
+        return
+      }
+
+      drawScene(true)
+      animationFrame = requestAnimationFrame(animate)
+    }
+
+    function startAnimation() {
+      if (
+        animationFrame === null &&
+        !prefersReducedMotion &&
+        isDocumentVisible
+      ) {
+        animationFrame = requestAnimationFrame(animate)
+      }
+    }
+
+    function resizeCanvas() {
+      viewportWidth = window.innerWidth
+      viewportHeight = window.innerHeight
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5)
+
+      canvasElement.width = Math.round(viewportWidth * pixelRatio)
+      canvasElement.height = Math.round(viewportHeight * pixelRatio)
+      canvasElement.style.width = `${viewportWidth}px`
+      canvasElement.style.height = `${viewportHeight}px`
+      drawingContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+      initializeParticles()
+      drawScene(false)
+    }
+
+    function clearPointer() {
+      pointer.active = false
+      pointer.x = -9999
+      pointer.y = -9999
+    }
+
+    function handlePointerMove(event: PointerEvent) {
+      if (event.pointerType === "touch") return
+      pointer.x = event.clientX
+      pointer.y = event.clientY
+      pointer.active = true
+    }
+
+    function handleVisibilityChange() {
+      isDocumentVisible = !document.hidden
+      if (isDocumentVisible) {
+        drawScene(false)
+        startAnimation()
+      } else {
+        stopAnimation()
+      }
+    }
+
+    function handleMotionPreference(event: MediaQueryListEvent) {
+      prefersReducedMotion = event.matches
+      if (prefersReducedMotion) {
+        stopAnimation()
+        drawScene(false)
+      } else {
+        startAnimation()
+      }
     }
 
     resizeCanvas()
-    const handleMouseMove = (event: MouseEvent) => {
-      mouse.x = event.clientX
-      mouse.y = event.clientY
-      mouse.active = true
-    }
-    const handleMouseLeave = () => {
-      mouse.active = false
-      mouse.x = -9999
-      mouse.y = -9999
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("mouseout", handleMouseLeave)
-    window.addEventListener("resize", resizeCanvas)
-    drawParticles()
+    startAnimation()
+    window.addEventListener("pointermove", handlePointerMove, { passive: true })
+    window.addEventListener("blur", clearPointer)
+    window.addEventListener("resize", resizeCanvas, { passive: true })
+    document.documentElement.addEventListener("mouseleave", clearPointer)
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    reducedMotionQuery.addEventListener("change", handleMotionPreference)
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("mouseout", handleMouseLeave)
+      stopAnimation()
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("blur", clearPointer)
       window.removeEventListener("resize", resizeCanvas)
-      cancelAnimationFrame(animationId)
+      document.documentElement.removeEventListener("mouseleave", clearPointer)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+      reducedMotionQuery.removeEventListener("change", handleMotionPreference)
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" aria-hidden="true" />
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0"
+      aria-hidden="true"
+    />
+  )
 }
 
 export function SiteBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20" />
+    <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+      <div className="absolute inset-0 bg-linear-to-b from-background via-background to-secondary/20" />
       <ParticleCanvas />
     </div>
   )

@@ -56,7 +56,7 @@ function ProjectCard({
       className="group relative bg-card border border-border rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300"
     >
       {/* Header gradient bar */}
-      <div className="h-1 bg-gradient-to-r from-primary to-primary/50" />
+      <div className="h-1 bg-linear-to-r from-primary to-primary/50" />
 
       <div className="p-6">
         {/* Category */}

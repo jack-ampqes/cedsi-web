@@ -1,6 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Zap, Settings, Shield } from "lucide-react"
 
@@ -11,50 +13,24 @@ const features = [
 ]
 
 export function Hero() {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-20">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border-none mb-8"
-          >
-            <span className="text-sm font-medium text-primary">
-              30+ Years of Engineering Excellence
-            </span>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
             className="mb-6 flex justify-center"
           >
-            <div
-              className="h-35 w-65 md:h-55 md:w-85 bg-primary"
-              role="img"
-              aria-label="CEDSI alternate logo mark"
-              style={{
-                WebkitMaskImage: "url('/CEDSI-logo-alt.svg')",
-                maskImage: "url('/CEDSI-logo-alt.svg')",
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-              }}
+            <Image
+              src="/alt-logo-AMPCEDSI.svg"
+              alt="CEDSI alternate logo mark"
+              width={340}
+              height={272}
+              priority
+              className="h-35 w-65 object-contain md:h-55 md:w-85"
             />
           </motion.div>
 
@@ -89,20 +65,22 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Button
+              asChild
               size="lg"
-              onClick={() => scrollToSection("#contact")}
-              className="bg-primary text-primary-foreground border border-transparent hover:border-white/80 hover:bg-transparent hover:text-primary px-8"
+              className="border border-transparent px-8 hover:border-white/80 hover:bg-transparent hover:text-primary"
             >
-              Start Your Project
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link href="/#contact">
+                Start Your Project
+                <ArrowRight aria-hidden="true" />
+              </Link>
             </Button>
             <Button
+              asChild
               size="lg"
               variant="outline"
-              onClick={() => scrollToSection("#services")}
-              className="border-border border-white/80 hover:border-transparent hover:bg-white/75 hover:text-primary-foreground px-8"
+              className="border-white/80 px-8 hover:border-transparent hover:bg-white/75 hover:text-primary-foreground"
             >
-              Explore Services
+              <Link href="/#services">Explore Services</Link>
             </Button>
           </motion.div>
 
@@ -119,7 +97,7 @@ export function Hero() {
                 className="group flex items-center gap-2 text-muted-foreground"
               >
                 <div className="flex items-center gap-2 rounded-full px-3 py-2 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_0_0_#00000080]">
-           
+
                   <feature.icon className="h-5 w-5 text-primary" />
                   <span className="text-sm font-medium">{feature.label}</span>
                 </div>

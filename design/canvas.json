@@ -1,0 +1,13 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 600, "h": 600 },
+    { "file": "StudyCallouts.dc.html", "x": 700, "y": 0, "w": 600, "h": 600 },
+    { "file": "Minimal.dc.html", "x": 1400, "y": 0, "w": 600, "h": 600 }
+  ],
+  "annotations": [
+    { "id": "brief", "x": 0, "y": -150, "w": 600, "text": "Main: the leading candidate. Balanced one-line, equipment annotated, animated flow from the utility service down to the UL 508A panel." },
+    { "id": "note-studies", "x": 700, "y": -150, "w": 600, "text": "Study callouts: same skeleton, annotated with the four AMP engineering studies and their code references. Denser, more technical." },
+    { "id": "note-minimal", "x": 1400, "y": -150, "w": 600, "text": "Minimal: symmetric and poster-like, reads at a glance. Less engineering credibility, more graphic punch." }
+  ],
+  "launch": { "view": "canvas" }
+}

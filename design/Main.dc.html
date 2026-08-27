@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; background: #131233; font-family: Inter, system-ui, sans-serif; }
+    a { color: #8ab8ff; }
+    a:hover { color: #c9dcff; }
+    .mono { font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .dashline { stroke-dasharray: 9 15; }
+    .flow { animation: dcflow 2.6s linear infinite; }
+    @keyframes dcflow { to { stroke-dashoffset: -48; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+  </style>
+</helmet>
+<div style="width: 600px; height: 600px; padding: 20px; box-sizing: border-box; position: relative; background: #131233;">
+  <div style="position: relative; width: 100%; height: 100%; border: 1px solid #4a5160; border-radius: 8px; background: #11102e; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(to right, #4b51604d 1px, transparent 1px), linear-gradient(to bottom, #4b51604d 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div style="position: absolute; inset: 32px; border: 2px dashed #ffffff4d; border-radius: 8px; padding: 24px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 448 448" style="width: 100%; height: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="dcglow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="7" result="b"></feGaussianBlur>
+            <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+          </filter>
+        </defs>
+
+        <g stroke="#f4f5f8" stroke-opacity="0.26" stroke-width="1.75" fill="none" stroke-linecap="round">
+          <path d="M152 252 V 320"></path>
+          <path d="M232 252 V 320"></path>
+          <path d="M384 252 V 320"></path>
+        </g>
+
+        <g stroke="#f4f5f8" stroke-opacity="0.42" stroke-width="1.5" fill="none" stroke-linecap="round">
+          <path d="M89 169 H 62 V 186"></path>
+          <path d="M53 186 H 71"></path>
+          <path d="M56.5 190.5 H 67.5"></path>
+          <path d="M60 195 H 64"></path>
+        </g>
+
+        <path d="M104 54 V 252 H 312 V 320" fill="none" stroke="{{accent}}" stroke-opacity="0.16" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#dcglow)"></path>
+        <path d="M64 252 H 400" fill="none" stroke="{{accent}}" stroke-opacity="0.85" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M104 54 V 252 H 312 V 320" fill="none" stroke="{{accent}}" stroke-opacity="0.9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path class="dashline {{flowClass}}" d="M104 54 V 252 H 312 V 320" fill="none" stroke="#ffffff" stroke-opacity="0.7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <g fill="#11102e" stroke="#f4f5f8" stroke-opacity="0.55" stroke-width="1.75">
+          <circle cx="104" cy="40" r="14"></circle>
+          <path d="M97 40 q3.5 -5.5 7 0 q3.5 5.5 7 0" fill="none" stroke-opacity="0.8"></path>
+          <rect x="96" y="88" width="16" height="22" rx="1"></rect>
+          <circle cx="104" cy="147" r="15" fill="none"></circle>
+          <circle cx="104" cy="169" r="15" fill="none"></circle>
+          <rect x="96" y="206" width="16" height="16" rx="1"></rect>
+          <rect x="144" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="224" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="376" y="282" width="16" height="16" rx="1"></rect>
+        </g>
+        <rect x="304" y="282" width="16" height="16" rx="1" fill="#11102e" stroke="{{accent}}" stroke-opacity="0.9" stroke-width="1.75"></rect>
+
+        <g fill="#11102e" stroke="#f4f5f8" stroke-opacity="0.55" stroke-width="1.75">
+          <rect x="126" y="320" width="52" height="38" rx="1"></rect>
+          <path d="M143.3 320 V 358" stroke-opacity="0.3"></path>
+          <path d="M160.6 320 V 358" stroke-opacity="0.3"></path>
+          <circle cx="232" cy="339" r="19"></circle>
+          <rect x="364" y="320" width="40" height="38" rx="1"></rect>
+          <path d="M370 330 H 398" stroke-opacity="0.3"></path>
+          <path d="M370 339 H 398" stroke-opacity="0.3"></path>
+          <path d="M370 348 H 398" stroke-opacity="0.3"></path>
+        </g>
+        <g fill="#11102e" stroke="{{accent}}" stroke-opacity="0.9" stroke-width="1.75">
+          <rect x="286" y="320" width="52" height="38" rx="1"></rect>
+          <path d="M292 330 H 332" stroke-opacity="0.45"></path>
+          <path d="M292 339 H 332" stroke-opacity="0.45"></path>
+          <path d="M292 348 H 332" stroke-opacity="0.45"></path>
+        </g>
+        <text class="mono" x="232" y="343" text-anchor="middle" font-size="13" font-weight="500" fill="#f4f5f8" fill-opacity="0.7">M</text>
+
+        <g class="mono" fill="#c4c8d2" opacity="{{labelOpacity}}">
+          <g font-size="9" letter-spacing="0.9" fill-opacity="0.8">
+            <text x="126" y="37">UTILITY SERVICE</text>
+            <text x="126" y="103">MAIN DISCONNECT</text>
+            <text x="126" y="154">1500 kVA</text>
+            <text x="126" y="218">MAIN BREAKER</text>
+            <text x="400" y="242" text-anchor="end">480 V MAIN BUS</text>
+          </g>
+          <g font-size="8" letter-spacing="0.6" fill-opacity="0.5">
+            <text x="126" y="49">13.8 kV · 3PH · 60 Hz</text>
+            <text x="126" y="166">13.8 kV TO 480 V</text>
+            <text x="126" y="229">2000 A</text>
+          </g>
+          <g font-size="8.5" letter-spacing="0.4" text-anchor="middle">
+            <text x="152" y="376" fill-opacity="0.8">MCC-1</text>
+            <text x="152" y="388" fill-opacity="0.5">MOTOR CONTROL</text>
+            <text x="232" y="376" fill-opacity="0.8">PROCESS PUMP</text>
+            <text x="232" y="388" fill-opacity="0.5">150 HP</text>
+            <text x="384" y="376" fill-opacity="0.8">PANEL LP-1</text>
+            <text x="384" y="388" fill-opacity="0.5">LIGHTING</text>
+          </g>
+          <g font-size="8.5" letter-spacing="0.4" text-anchor="middle" fill="{{accent}}">
+            <text x="312" y="376">CONTROL PANEL</text>
+            <text x="312" y="388" fill-opacity="0.7">UL 508A</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="position: absolute; right: 4px; bottom: 4px; background: #ffffff; color: #20232b; padding: 8px 16px; border-radius: 8px; box-shadow: 0 0 20px #002f5d66, 0 0 40px #002f5d33; font-size: 14px; font-weight: 600;">UL 508A Certified</div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#8ab8ff","options":["#8ab8ff","#164f83","#f4f5f8","#5eead4"],"section":"Style"},"animate":{"editor":"boolean","default":true,"section":"Style"},"labels":{"editor":"boolean","default":true,"section":"Style"},"$preview":{"width":600,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#8ab8ff',
+      labelOpacity: (this.props.labels ?? true) ? '1' : '0',
+      flowClass: (this.props.animate ?? true) ? 'flow' : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

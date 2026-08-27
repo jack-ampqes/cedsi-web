@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import Image from "next/image"
+import { motion, useReducedMotion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 
 const stats = [
@@ -21,9 +22,10 @@ function AnimatedCounter({
   inView: boolean
 }) {
   const [count, setCount] = useState(0)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
-    if (!inView) return
+    if (!inView || prefersReducedMotion) return
 
     const duration = 2000
     const steps = 60
@@ -42,11 +44,11 @@ function AnimatedCounter({
     }, stepDuration)
 
     return () => clearInterval(timer)
-  }, [value, inView])
+  }, [value, inView, prefersReducedMotion])
 
   return (
     <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary text-glow">
-      {count}
+      {inView && prefersReducedMotion ? value : count}
       {suffix}
     </span>
   )
@@ -132,6 +134,21 @@ export function About() {
                 the unique requirements and regulatory standards that drive
                 successful project outcomes.
               </p>
+              <p className="leading-relaxed">
+                CEDSI is part of AMP Quality Energy Services, giving our clients
+                access to a broader bench of{" "}
+                <a
+                  href="https://www.ampqes.com/services/engineering-services"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                >
+                  engineering services
+                </a>
+                {", "}
+                including arc flash studies, device coordination, load studies,
+                and short circuit analysis.
+              </p>
             </div>
           </motion.div>
 
@@ -143,60 +160,20 @@ export function About() {
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            <div className="aspect-square relative rounded-lg overflow-hidden bg-card border border-border">
-              {/* Engineering Grid Pattern */}
-              <div className="absolute inset-0 grid-pattern" />
-
-              {/* Blueprint-style content */}
-              <div className="absolute inset-0 flex items-center justify-center p-8">
-                <div className="w-full h-full border-2 border-dashed border-primary/30 rounded-lg p-6 flex flex-col justify-center">
-                  {/* Circuit-like decorations */}
-                  <svg
-                    className="w-full h-full text-primary/20"
-                    viewBox="0 0 200 200"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    {/* Horizontal lines */}
-                    <line x1="0" y1="50" x2="80" y2="50" stroke="currentColor" strokeWidth="2" />
-                    <line x1="120" y1="50" x2="200" y2="50" stroke="currentColor" strokeWidth="2" />
-                    <line x1="0" y1="100" x2="60" y2="100" stroke="currentColor" strokeWidth="2" />
-                    <line x1="140" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="2" />
-                    <line x1="0" y1="150" x2="80" y2="150" stroke="currentColor" strokeWidth="2" />
-                    <line x1="120" y1="150" x2="200" y2="150" stroke="currentColor" strokeWidth="2" />
-
-                    {/* Vertical lines */}
-                    <line x1="50" y1="0" x2="50" y2="40" stroke="currentColor" strokeWidth="2" />
-                    <line x1="50" y1="60" x2="50" y2="90" stroke="currentColor" strokeWidth="2" />
-                    <line x1="150" y1="110" x2="150" y2="140" stroke="currentColor" strokeWidth="2" />
-                    <line x1="150" y1="160" x2="150" y2="200" stroke="currentColor" strokeWidth="2" />
-
-                    {/* Nodes/circles */}
-                    <circle cx="80" cy="50" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="120" cy="50" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="60" cy="100" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="140" cy="100" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="80" cy="150" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <circle cx="120" cy="150" r="8" stroke="currentColor" strokeWidth="2" fill="none" />
-
-                    {/* Center element */}
-                    <rect x="85" y="85" width="30" height="30" stroke="currentColor" strokeWidth="2" fill="none" />
-                    <line x1="92" y1="100" x2="108" y2="100" stroke="currentColor" strokeWidth="2" />
-                    <line x1="100" y1="92" x2="100" y2="108" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                </div>
-              </div>
+            <div className="aspect-[3/2] relative rounded-lg overflow-hidden bg-card border border-border">
+              <Image
+                src="/team.jpg"
+                alt="The CEDSI team outside the company's offices"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
 
               {/* Corner accents */}
               <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-primary/50" />
               <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-primary/50" />
               <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-primary/50" />
               <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-primary/50" />
-            </div>
-
-            {/* Floating badge */}
-            <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg shadow-lg glow-cyan">
-              <span className="text-sm font-semibold">UL 508A Certified</span>
             </div>
           </motion.div>
         </div>

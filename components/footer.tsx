@@ -1,195 +1,173 @@
-"use client"
-
 import Image from "next/image"
-import { Mail, Phone } from "lucide-react"
-
-function LinkedInIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.03-1.85-3.03-1.85 0-2.13 1.44-2.13 2.93v5.67H9.37V9h3.4v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.42v6.32zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
-    </svg>
-  )
-}
+import Link from "next/link"
+import { ArrowUpRight, Mail, Phone } from "lucide-react"
 
 const footerLinks = {
   services: [
-    { label: "Electrical Engineering", href: "#services" },
-    { label: "Industrial Controls", href: "#services" },
-    { label: "PLC Programming", href: "#services" },
-    { label: "Panel Fabrication", href: "#services" },
-    { label: "Field Services", href: "#services" },
+    {
+      label: "Electrical Engineering",
+      href: "/capabilities/electrical-engineering",
+    },
+    {
+      label: "Controls & Automation",
+      href: "/capabilities/controls-automation",
+    },
+    { label: "Panel Shop", href: "/capabilities/panel-shop" },
+    {
+      label: "Design & Documentation",
+      href: "/capabilities/design-documentation",
+    },
+    { label: "Field Services", href: "/capabilities/field-services" },
   ],
   industries: [
-    { label: "Automotive", href: "#industries" },
-    { label: "Chemical", href: "#industries" },
-    { label: "Pharmaceutical", href: "#industries" },
-    { label: "Water Treatment", href: "#industries" },
-    { label: "Manufacturing", href: "#industries" },
+    { label: "Automotive", href: "/#industries" },
+    { label: "Chemical", href: "/#industries" },
+    { label: "Pharmaceutical", href: "/#industries" },
+    { label: "Water Treatment", href: "/#industries" },
+    { label: "Manufacturing", href: "/#industries" },
   ],
   company: [
-    { label: "About Us", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact", href: "#contact" },
+    { label: "About Us", href: "/#about", external: false },
+    { label: "Projects", href: "/#projects", external: false },
+    { label: "Contact", href: "/#contact", external: false },
+    {
+      label: "AMP Engineering Services",
+      href: "https://www.ampqes.com/services/engineering-services",
+      external: true,
+    },
   ],
-}
+} as const
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
-  const handleNavClick = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
-    <footer className="bg-secondary/30 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          {/* Logo & Description */}
+    <footer className="relative z-10 border-t border-border bg-secondary/30">
+      <div className="container mx-auto px-4 py-16 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           <div className="lg:col-span-2">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault()
-                window.scrollTo({ top: 0, behavior: "smooth" })
-              }}
-              className="inline-block mb-4"
+            <Link
+              href="/"
+              className="mb-4 inline-block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="CEDSI home"
             >
               <Image
-                src="/CEDSI logo.svg"
-                alt="CEDSI Logo"
+                src="/logo-AMPCEDSI.svg"
+                alt="CEDSI"
                 width={220}
-                height={50}
-                className="h-8 w-auto brightness-0 invert"
+                height={56}
+                className="h-8 w-auto"
               />
-            </a>
-            <p className="text-primary text-sm leading-relaxed mb-6 max-w-sm">
-              Controls and Electrical Design Services, Inc. An Exceptional
-              Engineering Resource for industrial automation and electrical
+            </Link>
+            <p className="mb-6 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Controls and Electrical Design Services, Inc. An exceptional
+              engineering resource for industrial automation and electrical
               systems.
             </p>
 
-            {/* Contact shortcuts */}
             <div className="flex flex-col gap-2 text-sm">
               <a
                 href="tel:+12564619993"
-                className="flex items-center gap-2 text-primary hover:text-primary transition-colors"
+                className="flex w-fit items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
               >
-                <Phone className="h-4 w-4" />
+                <Phone className="size-4" aria-hidden="true" />
                 256-461-9993
               </a>
               <a
                 href="mailto:sales@cedsi.com"
-                className="flex items-center gap-2 text-primary hover:text-primary transition-colors"
+                className="flex w-fit items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="size-4" aria-hidden="true" />
                 sales@cedsi.com
               </a>
             </div>
           </div>
 
-          {/* Services Links */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-foreground">
+          <nav aria-labelledby="footer-services">
+            <h2
+              id="footer-services"
+              className="mb-4 text-sm font-semibold tracking-wider text-foreground uppercase"
+            >
               Services
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavClick(link.href)
-                    }}
-                    className="text-sm text-primary hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Industries Links */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-foreground">
+          <nav aria-labelledby="footer-industries">
+            <h2
+              id="footer-industries"
+              className="mb-4 text-sm font-semibold tracking-wider text-foreground uppercase"
+            >
               Industries
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {footerLinks.industries.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavClick(link.href)
-                    }}
-                    className="text-sm text-primary hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Company Links */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-foreground">
+          <nav aria-labelledby="footer-company">
+            <h2
+              id="footer-company"
+              className="mb-4 text-sm font-semibold tracking-wider text-foreground uppercase"
+            >
               Company
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleNavClick(link.href)
-                    }}
-                    className="text-sm text-primary hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </a>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                      <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
-
-            {/* Social links */}
-            <div className="mt-6">
-              <h4 className="text-sm font-semibold uppercase tracking-wider mb-3 text-foreground">
-                Follow Us
-              </h4>
-              <div className="flex gap-3">
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-card border border-border flex items-center justify-center text-primary hover:text-primary hover:border-primary/50 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedInIcon className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          </div>
+          </nav>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-primary">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
+          <p className="text-sm text-muted-foreground">
             &copy; {currentYear} Controls and Electrical Design Services, Inc.
             All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-sm text-primary">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500" />
-              UL 508A Certified
-            </span>
-          </div>
+          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="size-2 rounded-full bg-emerald-400" aria-hidden="true" />
+            UL 508A Certified
+          </p>
         </div>
       </div>
     </footer>

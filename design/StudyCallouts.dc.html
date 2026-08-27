@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@400;600;700&display=swap">
+  <style>
+    body { margin: 0; background: #131233; font-family: Inter, system-ui, sans-serif; }
+    a { color: #8ab8ff; }
+    a:hover { color: #c9dcff; }
+    .mono { font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  </style>
+</helmet>
+<div style="width: 600px; height: 600px; padding: 20px; box-sizing: border-box; position: relative; background: #131233;">
+  <div style="position: relative; width: 100%; height: 100%; border: 1px solid #4a5160; border-radius: 8px; background: #11102e; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(to right, #4b51604d 1px, transparent 1px), linear-gradient(to bottom, #4b51604d 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div style="position: absolute; inset: 32px; border: 2px dashed #ffffff4d; border-radius: 8px; padding: 24px; box-sizing: border-box; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 448 448" style="width: 100%; height: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+        <rect x="44" y="228" width="364" height="48" rx="6" fill="none" stroke="{{accent}}" stroke-opacity="0.45" stroke-width="1.25" stroke-dasharray="5 6"></rect>
+
+        <g stroke="#f4f5f8" stroke-opacity="0.26" stroke-width="1.75" fill="none" stroke-linecap="round">
+          <path d="M152 252 V 320"></path>
+          <path d="M232 252 V 320"></path>
+          <path d="M312 252 V 320"></path>
+          <path d="M384 252 V 320"></path>
+          <path d="M104 54 V 252"></path>
+        </g>
+
+        <path d="M64 252 H 400" fill="none" stroke="{{accent}}" stroke-opacity="0.85" stroke-width="5" stroke-linecap="round"></path>
+
+        <g fill="#11102e" stroke="#f4f5f8" stroke-opacity="0.55" stroke-width="1.75">
+          <circle cx="104" cy="40" r="14"></circle>
+          <path d="M97 40 q3.5 -5.5 7 0 q3.5 5.5 7 0" fill="none" stroke-opacity="0.8"></path>
+          <rect x="96" y="88" width="16" height="22" rx="1"></rect>
+          <circle cx="104" cy="147" r="15" fill="none"></circle>
+          <circle cx="104" cy="169" r="15" fill="none"></circle>
+          <rect x="96" y="206" width="16" height="16" rx="1"></rect>
+          <rect x="144" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="224" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="304" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="376" y="282" width="16" height="16" rx="1"></rect>
+          <rect x="126" y="320" width="52" height="34" rx="1"></rect>
+          <circle cx="232" cy="337" r="17"></circle>
+          <rect x="286" y="320" width="52" height="34" rx="1"></rect>
+          <rect x="364" y="320" width="40" height="34" rx="1"></rect>
+        </g>
+
+        <g stroke="{{accent}}" stroke-opacity="0.7" stroke-width="1.25" fill="none" stroke-linecap="round">
+          <path d="M126 147 H 150"></path>
+          <path d="M120 214 H 150"></path>
+          <path d="M60 276 V 384"></path>
+        </g>
+
+        <g class="mono">
+          <g font-size="9" letter-spacing="0.9" fill="{{accent}}">
+            <text x="156" y="144">LOAD STUDY</text>
+            <text x="156" y="211">DEVICE COORDINATION</text>
+            <text x="44" y="400">ARC FLASH BOUNDARY</text>
+            <text x="408" y="212" text-anchor="end">SHORT CIRCUIT</text>
+          </g>
+          <g font-size="8" letter-spacing="0.6" fill="#c4c8d2" fill-opacity="0.5">
+            <text x="156" y="156">NFPA 70B 9.4</text>
+            <text x="156" y="223">ANSI/IEEE 242</text>
+            <text x="44" y="412">NFPA 70E 130.5 · 8 cal/cm²</text>
+            <text x="408" y="224" text-anchor="end">42 kA · NEC 110.9</text>
+          </g>
+          <g font-size="8.5" letter-spacing="0.4" fill="#c4c8d2" fill-opacity="0.55" text-anchor="middle">
+            <text x="152" y="372">MCC-1</text>
+            <text x="232" y="372">PUMP</text>
+            <text x="312" y="372">CONTROL PANEL</text>
+            <text x="384" y="372">LP-1</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="position: absolute; right: 4px; bottom: 4px; background: #ffffff; color: #20232b; padding: 8px 16px; border-radius: 8px; box-shadow: 0 0 20px #002f5d66, 0 0 40px #002f5d33; font-size: 14px; font-weight: 600;">UL 508A Certified</div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#8ab8ff","options":["#8ab8ff","#164f83","#f4f5f8","#5eead4"],"section":"Style"},"$preview":{"width":600,"height":600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#8ab8ff' };
+  }
+}
+</script>
+</body>
+</html>

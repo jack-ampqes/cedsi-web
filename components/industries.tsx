@@ -72,7 +72,7 @@ export function Industries() {
   return (
     <section id="industries" className="py-24 lg:py-32 relative">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/20 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-secondary/20 to-transparent" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -140,12 +140,12 @@ export function Industries() {
 
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
             {majorVendors.map((vendor) => (
-              <div key={vendor.src} className="h-8 flex items-center">
+              <div key={vendor.src} className="flex h-15 items-center">
                 <Image
                   src={vendor.src}
                   alt={vendor.alt}
-                  width={150}
-                  height={40}
+                  width={225}
+                  height={60}
                   className="h-15 w-auto object-contain brightness-0 invert opacity-85"
                 />
               </div>

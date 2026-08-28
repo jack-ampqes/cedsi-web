@@ -73,8 +73,8 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         isScrolled
-          ? "border-b border-border bg-background/85 backdrop-blur-xl"
-          : "bg-transparent"
+          ? "border-b border-[var(--nav-border)] bg-[var(--nav)]/95 shadow-lg backdrop-blur-xl"
+          : "border-b border-[var(--nav-border)]/60 bg-[var(--nav)]/80 backdrop-blur-md"
       )}
     >
       <nav
@@ -88,12 +88,12 @@ export function Navbar() {
               alt="CEDSI"
               width={220}
               height={56}
-              className="h-12 w-auto translate-y-0.5 lg:h-16 lg:translate-y-1"
+              className="h-9 w-auto lg:h-13"
               preload
             />
           </Link>
 
-          <div className="hidden items-center gap-8 lg:flex">
+          <div className="hidden items-center gap-6 lg:flex xl:gap-8">
             {sectionLinks.slice(0, 2).map((link) => (
               <Link key={link.href} href={link.href} className={navLinkClass}>
                 {link.label}
@@ -126,7 +126,7 @@ export function Navbar() {
                             <Link
                               href={item.href}
                               aria-current={pathname === item.href ? "page" : undefined}
-                              className="block rounded-md p-3 leading-none no-underline outline-none"
+                              className="block rounded-none p-3 leading-none no-underline outline-none"
                             >
                               <span className="text-sm font-medium leading-none">
                                 {item.label}
@@ -156,7 +156,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden lg:block">
-            <Button asChild className="glow-cyan">
+            <Button asChild>
               <Link href="/#contact">Get a Quote</Link>
             </Button>
           </div>
@@ -193,7 +193,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={closeMobileMenu}
-                    className="rounded-md py-2 text-2xl font-semibold text-foreground transition-colors hover:text-primary focus-visible:text-primary"
+                    className="rounded-none py-2 text-2xl font-semibold text-foreground transition-colors hover:text-primary focus-visible:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -212,7 +212,7 @@ export function Navbar() {
                             href={item.href}
                             onClick={closeMobileMenu}
                             aria-current={pathname === item.href ? "page" : undefined}
-                            className="rounded-md py-2 text-lg text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary aria-[current=page]:text-primary"
+                            className="rounded-none py-2 text-lg text-muted-foreground transition-colors hover:text-primary focus-visible:text-primary aria-[current=page]:text-primary"
                           >
                             {item.label}
                           </Link>
@@ -227,7 +227,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={closeMobileMenu}
-                    className="rounded-md py-2 text-2xl font-semibold text-foreground transition-colors hover:text-primary focus-visible:text-primary"
+                    className="rounded-none py-2 text-2xl font-semibold text-foreground transition-colors hover:text-primary focus-visible:text-primary"
                   >
                     {link.label}
                   </Link>

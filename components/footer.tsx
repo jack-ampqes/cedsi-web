@@ -48,7 +48,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link
               href="/"
-              className="mb-4 inline-block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="mb-4 inline-block rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               aria-label="CEDSI home"
             >
               <Image
@@ -165,7 +165,7 @@ export function Footer() {
             All rights reserved.
           </p>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span className="size-2 rounded-full bg-emerald-400" aria-hidden="true" />
+            <span className="size-2 rounded-none bg-emerald-400" aria-hidden="true" />
             UL 508A Certified
           </p>
         </div>

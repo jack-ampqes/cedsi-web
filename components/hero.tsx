@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10 pt-24 pb-12 lg:pt-32">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -41,7 +41,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 text-balance"
           >
-            An <span className="text-primary text-glow">Exceptional</span>{" "}
+            An <i>Exceptional</i>{" "}
             Engineering Resource
           </motion.h1>
 
@@ -78,7 +78,7 @@ export function Hero() {
               asChild
               size="lg"
               variant="outline"
-              className="border-white/80 px-8 hover:border-transparent hover:bg-white/75 hover:text-primary-foreground"
+              className="border-white/80 bg-transparent px-8 hover:border-transparent hover:bg-white/75 hover:text-primary-foreground"
             >
               <Link href="/#services">Explore Services</Link>
             </Button>
@@ -96,13 +96,13 @@ export function Hero() {
                 key={feature.label}
                 className="group flex items-center gap-2 text-muted-foreground"
               >
-                <div className="flex items-center gap-2 rounded-full px-3 py-2 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_0_0_#00000080]">
+                <div className="flex items-center gap-2 rounded-none px-3 py-2 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_0_0_#00000080]">
 
                   <feature.icon className="h-5 w-5 text-primary" />
                   <span className="text-sm font-medium">{feature.label}</span>
                 </div>
                 {index < features.length - 1 && (
-                  <span className="hidden sm:block ml-6 w-1 h-1 rounded-full bg-border" />
+                  <span className="hidden sm:block ml-6 w-1 h-1 rounded-none bg-border" />
                 )}
               </div>
             ))}

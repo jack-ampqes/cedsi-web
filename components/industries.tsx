@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import Image from "next/image"
@@ -12,40 +13,48 @@ import {
   Factory,
 } from "lucide-react"
 
+const DEFAULT_BACKGROUND = "/expertise.jpg"
+
 const industries = [
   {
     icon: Car,
     name: "Automotive",
+    image: "/sectors/automotive.jpg",
     description:
       "Assembly line automation, paint systems, and material handling controls for automotive manufacturing.",
   },
   {
     icon: FlaskConical,
     name: "Chemical",
+    image: "/sectors/chemical.jpg",
     description:
       "Process control systems, batch processing, and safety instrumented systems for chemical plants.",
   },
   {
     icon: Pill,
     name: "Pharmaceutical",
+    image: "/sectors/pharmaceutical.jpg",
     description:
       "FDA-compliant automation, clean room controls, and validation documentation for pharma facilities.",
   },
   {
     icon: TreePine,
     name: "Pulp & Paper",
+    image: "/sectors/pulp-paper.jpg",
     description:
       "Process automation, drive systems, and power distribution for pulp and paper mills.",
   },
   {
     icon: Droplets,
     name: "Water Treatment",
+    image: "/sectors/water-treatment.jpg",
     description:
       "SCADA systems, pump controls, and telemetry solutions for municipal and industrial water systems.",
   },
   {
     icon: Factory,
     name: "Manufacturing",
+    image: "/sectors/manufacturing.jpg",
     description:
       "Custom automation solutions, machine controls, and MES integration for diverse manufacturing operations.",
   },
@@ -59,6 +68,8 @@ const majorVendors = [
 ]
 
 export function Industries() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
   const [headerRef, headerInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -70,9 +81,37 @@ export function Industries() {
   })
 
   return (
-    <section id="industries" className="py-24 lg:py-32 relative">
-      {/* Background */}
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-secondary/20 to-transparent" />
+    <section id="industries" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Background image stack - the default sits underneath, so a sector
+          image that hasn't been added yet simply falls back to it */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <Image
+          src={DEFAULT_BACKGROUND}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        {industries.map((industry, index) => (
+          <Image
+            key={industry.name}
+            src={industry.image}
+            alt=""
+            fill
+            sizes="100vw"
+            className={`object-cover transition-opacity duration-700 ease-out ${
+              activeIndex === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Scrim that keeps the content readable over the photography */}
+      <div className="absolute inset-0 bg-background/80" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background"
+        aria-hidden="true"
+      />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -101,6 +140,7 @@ export function Industries() {
           initial={{ opacity: 0 }}
           animate={gridInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
+          onMouseLeave={() => setActiveIndex(null)}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {industries.map((industry, index) => (
@@ -109,15 +149,19 @@ export function Industries() {
               initial={{ opacity: 0, y: 30 }}
               animate={gridInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-lg p-6 hover:bg-card transition-all duration-300"
+              tabIndex={0}
+              onMouseEnter={() => setActiveIndex(index)}
+              onFocus={() => setActiveIndex(index)}
+              onBlur={() => setActiveIndex(null)}
+              className="group relative bg-background/70 backdrop-blur-md border border-white/10 rounded-none p-6 hover:bg-background/85 hover:border-white/25 focus-visible:border-white/40 outline-none transition-all duration-300"
             >
               {/* Icon with animated background */}
               <div className="relative mb-4">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div className="w-14 h-14 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <industry.icon className="h-7 w-7 text-primary" />
                 </div>
                 {/* Pulse effect on hover */}
-                <div className="absolute inset-0 w-14 h-14 rounded-xl bg-primary/20 scale-100 opacity-0 group-hover:scale-150 group-hover:opacity-0 transition-all duration-500" />
+                <div className="absolute inset-0 w-14 h-14 rounded-none bg-primary/20 scale-100 opacity-0 group-hover:scale-150 group-hover:opacity-0 transition-all duration-500" />
               </div>
 
               <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">

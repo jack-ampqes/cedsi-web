@@ -47,7 +47,7 @@ function AnimatedCounter({
   }, [value, inView, prefersReducedMotion])
 
   return (
-    <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary text-glow">
+    <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary">
       {inView && prefersReducedMotion ? value : count}
       {suffix}
     </span>
@@ -141,7 +141,7 @@ export function About() {
                   href="https://www.ampqes.com/services/engineering-services"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-primary underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                  className="font-medium text-primary underline-offset-4 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-none"
                 >
                   engineering services
                 </a>
@@ -160,7 +160,7 @@ export function About() {
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            <div className="aspect-[3/2] relative rounded-lg overflow-hidden bg-card border border-border">
+            <div className="aspect-[3/2] relative rounded-none overflow-hidden bg-card border border-border">
               <Image
                 src="/team.jpg"
                 alt="The CEDSI team outside the company's offices"

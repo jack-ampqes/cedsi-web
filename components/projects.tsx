@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import { ArrowUpRight } from "lucide-react"
+import { WireframeBackdrop } from "@/components/wireframe-backdrop"
 
 const projects = [
   {
@@ -53,27 +53,24 @@ function ProjectCard({
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.15 }}
-      className="group relative bg-card border border-border rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300"
+      className="group relative bg-white border border-[#0c0a34]/12 rounded-none overflow-hidden hover:border-[#1B0F56]/40 transition-all duration-300"
     >
       {/* Header gradient bar */}
-      <div className="h-1 bg-linear-to-r from-primary to-primary/50" />
+      <div className="h-1 bg-linear-to-r from-[#1B0F56] to-[#1B0F56]/30" />
 
       <div className="p-6">
         {/* Category */}
-        <span className="text-xs font-medium text-primary uppercase tracking-wider">
+        <span className="text-xs font-medium text-[#1B0F56] uppercase tracking-wider">
           {project.category}
         </span>
 
-        {/* Title with arrow */}
-        <div className="flex items-start justify-between gap-4 mt-2 mb-4">
-          <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
-            {project.title}
-          </h3>
-          <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all shrink-0" />
-        </div>
+        {/* Title */}
+        <h3 className="text-xl font-semibold text-[#0c0a34] mt-2 mb-4 group-hover:text-[#1B0F56] transition-colors">
+          {project.title}
+        </h3>
 
         {/* Description */}
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+        <p className="text-[#4d5364] text-sm leading-relaxed mb-6">
           {project.description}
         </p>
 
@@ -82,16 +79,13 @@ function ProjectCard({
           {project.stats.map((stat) => (
             <span
               key={stat}
-              className="text-xs px-3 py-1.5 rounded-full bg-secondary border border-border text-foreground"
+              className="text-xs px-3 py-1.5 rounded-none bg-[#1B0F56]/8 border border-[#1B0F56]/15 text-[#1B0F56]"
             >
               {stat}
             </span>
           ))}
         </div>
       </div>
-
-      {/* Hover glow effect */}
-      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </motion.div>
   )
 }
@@ -103,9 +97,18 @@ export function Projects() {
   })
 
   return (
-    <section id="projects" className="py-24 lg:py-32 bg-secondary/20 relative">
-      {/* Grid pattern background */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
+    <section
+      id="projects"
+      className="py-24 lg:py-32 relative overflow-hidden bg-white"
+      style={
+        {
+          "--heading-color": "#0c0a34",
+          "--paragraph-color": "#4d5364",
+        } as React.CSSProperties
+      }
+    >
+      {/* Animated wireframe schematic background */}
+      <WireframeBackdrop className="absolute inset-0 h-full w-full" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -116,13 +119,13 @@ export function Projects() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
+          <span className="text-[#1B0F56] text-sm font-semibold tracking-wider uppercase mb-4 block">
             Featured Projects
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance text-[#0c0a34]">
             Proven Track Record
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-[#4d5364] text-lg">
             Explore a selection of our successful projects that demonstrate our
             technical expertise and commitment to excellence.
           </p>

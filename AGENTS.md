@@ -52,3 +52,24 @@ Other copy conventions:
 
 - Keep marketing prose plain and concrete. No filler superlatives.
 - External links open in a new tab with `target="_blank" rel="noopener noreferrer"`.
+
+## Visual style
+
+**No rounded corners anywhere.** The site uses square corners throughout. Every
+element that takes a radius utility must be `rounded-none`, and the Tailwind
+radius tokens in `app/globals.css` (`--radius`, `--radius-sm`, `--radius-md`,
+`--radius-lg`, `--radius-xl`) are all `0rem`.
+
+- When adding a shadcn/ui component, replace its default `rounded-*` /
+  `rounded-md` / `rounded-full` classes with `rounded-none` before committing.
+- Do not add `border-radius` in CSS, `borderRadius` in inline styles, or
+  `rx`/`ry` on SVG shapes.
+- Check for strays before finishing a change:
+
+```
+grep -rnoE "rounded(-[a-z0-9-]+)*" --include="*.tsx" --include="*.ts" \
+  --include="*.css" app components lib | grep -v "rounded-none"
+```
+
+Any hit outside `design/` (published design artifacts, not site code) is a real
+one and must be changed to `rounded-none`.

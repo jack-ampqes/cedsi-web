@@ -62,32 +62,32 @@ function ServiceCard({
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative bg-card border border-white/10 rounded-lg p-6 hover:border-white/20 transition-all duration-300"
+      className="group relative bg-white border border-[#0c0a34]/12 rounded-none p-6 hover:border-[#0c0a34]/30 transition-all duration-300"
     >
       {service.hoverImage && (
         <div
-          className="absolute inset-0 rounded-lg bg-cover bg-center opacity-0 group-hover:opacity-50 transition-opacity duration-300"
+          className="absolute inset-0 rounded-none bg-cover bg-center opacity-0 group-hover:opacity-50 transition-opacity duration-300"
           style={{ backgroundImage: `url(${service.hoverImage})` }}
           aria-hidden="true"
         />
       )}
 
-      {/* Glow effect on hover */}
-      <div className="absolute inset-0 rounded-lg bg-background/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Scrim that keeps text readable over the hover image */}
+      <div className="absolute inset-0 rounded-none bg-white/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative z-10">
         {/* Icon */}
-        <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-          <service.icon className="h-6 w-6 text-primary" />
+        <div className="w-12 h-12 rounded-none bg-[#1B0F56]/10 flex items-center justify-center mb-4 group-hover:bg-[#1B0F56]/20 transition-colors">
+          <service.icon className="h-6 w-6 text-[#1B0F56]" />
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-semibold mb-3 text-[#0c0a34] group-hover:text-[#1B0F56] transition-colors">
           {service.title}
         </h3>
 
         {/* Description */}
-        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+        <p className="text-[#4d5364] text-sm leading-relaxed mb-4">
           {service.description}
         </p>
 
@@ -96,7 +96,7 @@ function ServiceCard({
           {service.features.map((feature) => (
             <span
               key={feature}
-              className="text-xs px-2 py-1 rounded-full bg-secondary text-secondary-foreground"
+              className="text-xs px-2 py-1 rounded-none bg-[#1B0F56]/8 text-[#1B0F56] border border-[#1B0F56]/15"
             >
               {feature}
             </span>
@@ -114,9 +114,18 @@ export function Services() {
   })
 
   return (
-    <section id="services" className="py-24 lg:py-32 relative">
+    <section
+      id="services"
+      className="py-24 lg:py-32 relative bg-white"
+      style={
+        {
+          "--heading-color": "#0c0a34",
+          "--paragraph-color": "#4d5364",
+        } as React.CSSProperties
+      }
+    >
       {/* Background Pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <div className="absolute inset-0 grid-pattern-light opacity-60" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -127,13 +136,13 @@ export function Services() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase mb-4 block">
+          <span className="text-[#1B0F56] text-sm font-semibold tracking-wider uppercase mb-4 block">
             Our Services
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance text-[#0c0a34]">
             Comprehensive Engineering Solutions
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-[#4d5364] text-lg">
             From concept to completion, we deliver end-to-end electrical
             engineering and controls solutions tailored to your specific needs.
           </p>

@@ -79,10 +79,10 @@ export function CapabilityPage({ slug }: { slug: CapabilitySlug }) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={gridInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-lg p-6 hover:bg-card transition-all duration-300"
+                className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-none p-6 hover:bg-card transition-all duration-300"
               >
                 <div className="relative mb-4">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <div className="w-14 h-14 rounded-none bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <highlight.icon className="h-7 w-7 text-primary" />
                   </div>
                 </div>
@@ -127,7 +127,7 @@ export function CapabilityPage({ slug }: { slug: CapabilitySlug }) {
       {/* CTA */}
       <section className="pb-24 lg:pb-32">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-card/50 border border-border rounded-lg p-8 lg:p-12 text-center max-w-2xl mx-auto">
+          <div className="bg-card/50 border border-border rounded-none p-8 lg:p-12 text-center max-w-2xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Ready to discuss your project?
             </h2>
@@ -137,7 +137,7 @@ export function CapabilityPage({ slug }: { slug: CapabilitySlug }) {
             </p>
             <Button
               asChild
-              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               <Link href="/#contact">
                 Get a Quote

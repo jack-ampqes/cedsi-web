@@ -3,7 +3,60 @@ import { contactSchema } from "@/lib/contact"
 
 const RESEND_API_URL = "https://api.resend.com/emails"
 
+const RATE_LIMIT_MAX = 5
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+
+// Best effort throttle. State is per server instance, so it slows casual abuse
+// rather than guaranteeing a global limit across serverless invocations.
+const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>()
+
+function getClientKey(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for")
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0]!.trim()
+  }
+
+  return request.headers.get("x-real-ip") ?? "unknown"
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now()
+
+  for (const [bucketKey, bucket] of rateLimitBuckets) {
+    if (bucket.resetAt <= now) {
+      rateLimitBuckets.delete(bucketKey)
+    }
+  }
+
+  const bucket = rateLimitBuckets.get(key)
+
+  if (!bucket || bucket.resetAt <= now) {
+    rateLimitBuckets.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    })
+    return false
+  }
+
+  bucket.count += 1
+
+  return bucket.count > RATE_LIMIT_MAX
+}
+
 export async function POST(request: Request) {
+  if (isRateLimited(getClientKey(request))) {
+    return NextResponse.json(
+      { error: "Too many messages. Please try again later." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.ceil(RATE_LIMIT_WINDOW_MS / 1000)),
+        },
+      }
+    )
+  }
+
   let body: unknown
 
   try {

@@ -183,7 +183,7 @@ export function Contact() {
             <form
               onSubmit={handleSubmit(onSubmit)}
               noValidate
-              className="relative rounded-lg border border-border bg-card p-6 md:p-8"
+              className="relative rounded-none border border-border bg-card p-6 md:p-8"
               aria-label="Contact CEDSI"
             >
               <div className="absolute left-[-9999px] top-auto size-px overflow-hidden" aria-hidden="true">
@@ -268,7 +268,7 @@ export function Contact() {
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="glow-cyan mt-6 w-full md:w-auto"
+                className="mt-6 w-full md:w-auto"
               >
                 {isSubmitting ? (
                   <>

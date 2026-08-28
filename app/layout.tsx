@@ -60,7 +60,7 @@ export default function RootLayout({
       <body className="relative min-h-screen overflow-x-hidden font-sans antialiased">
         <a
           href="#main-content"
-          className="fixed top-3 left-3 z-100 -translate-y-24 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg transition-transform focus:translate-y-0"
+          className="fixed top-3 left-3 z-100 -translate-y-24 rounded-none bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>

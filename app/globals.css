@@ -8,44 +8,44 @@
   /* Mostly monochromatic base with deep blue accents */
   --background: #0c0a34;
   --foreground: #f4f5f8;
-  
+
   /* Card surfaces - slightly lighter than background */
   --card: #0000001a;
   --card-foreground: #f4f5f8;
-  
+
   --popover: #1d1f27;
   --popover-foreground: #f4f5f8;
-  
+
   --primary: #ffffff;
   --primary-foreground: #20232b;
-  
+
   --secondary: #232630;
   --secondary-foreground: #f4f5f8;
-  
+
   /* Muted elements */
   --muted: #2a2d37;
   --muted-foreground: #c4c8d2;
-  
-  --accent: #164f83;
+
+  --accent: #1B0F56;
   --accent-foreground: #f4f5f8;
-  
+
   --destructive: #ff7a80;
   --destructive-foreground: #2b0709;
-  
+
   /* Borders and inputs */
   --border: #4a5160;
   --input: #303541;
   --ring: #8ab8ff;
-  
+
   /* Chart colors */
   --chart-1: #002f5d;
   --chart-2: #13104f;
   --chart-3: #4b5160;
   --chart-4: #7a818f;
   --chart-5: #a9afbb;
-  
-  --radius: 0.5rem;
-  
+
+  --radius: 0rem;
+
   /* Sidebar */
   --sidebar: #191b23;
   --sidebar-foreground: #f4f5f8;
@@ -55,6 +55,10 @@
   --sidebar-accent-foreground: #f4f5f8;
   --sidebar-border: #3b3f4a;
   --sidebar-ring: #002f5d;
+
+  /* Navbar surface - lighter blue than the page background */
+  --nav: #343234;
+  --nav-border: #343234;
 
   /* Typography */
   --heading-color: #ffffff;
@@ -90,10 +94,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -123,7 +127,7 @@
     color: var(--paragraph-color);
     line-height: var(--paragraph-line-height);
   }
-  
+
   /* Smooth scrolling */
   html {
     color-scheme: dark;
@@ -162,7 +166,6 @@
 
 ::-webkit-scrollbar-thumb {
   background: #3b3f4a;
-  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -171,19 +174,72 @@
 
 /* Grid background pattern */
 .grid-pattern {
-  background-image: 
+  background-image:
     linear-gradient(to right, #4b51604d 1px, transparent 1px),
     linear-gradient(to bottom, #4b51604d 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Glow effect for accent elements */
-.glow-cyan {
-  box-shadow: 0 0 20px #002f5d66,
-              0 0 40px #002f5d33;
+/* Grid background pattern - light surfaces */
+.grid-pattern-light {
+  background-image:
+    linear-gradient(to right, #0c0a341a 1px, transparent 1px),
+    linear-gradient(to bottom, #0c0a341a 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* Text glow */
-.text-glow {
-  text-shadow: 0 0 20px #002f5d99;
+/* Animated engineering wireframe backdrop */
+@keyframes wf-flow {
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+@keyframes wf-trace-in {
+  from {
+    stroke-dashoffset: 2400;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wf-pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes wf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wf-trace {
+  stroke-dasharray: 2400;
+  animation: wf-trace-in 3s ease-out both;
+}
+
+.wf-packet {
+  stroke-dasharray: 14 210;
+  animation: wf-flow 9s linear infinite;
+}
+
+.wf-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wf-pulse 4s ease-in-out infinite;
+}
+
+.wf-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wf-spin 24s linear infinite;
 }

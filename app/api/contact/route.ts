@@ -122,9 +122,14 @@ export async function POST(request: Request) {
     })
 
     if (!response.ok) {
+      // Resend explains rejections (unverified sender domain, bad key) in the
+      // body, so log it or the failure is impossible to diagnose from logs.
+      const detail = await response.text().catch(() => "")
+
       console.error("Contact delivery failed.", {
         status: response.status,
         requestId: response.headers.get("x-request-id"),
+        detail: detail.slice(0, 500),
       })
       return NextResponse.json(
         { error: "We could not send your message. Please try again." },

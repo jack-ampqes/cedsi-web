@@ -135,9 +135,9 @@ export function Contact() {
                   Mailing Address
                 </p>
                 <address className="text-muted-foreground not-italic">
-                  P.O. Box 615
+                  P.O. Box 1725
                   <br />
-                  Madison, AL 35758
+                  Decatur, AL 35602
                   <br />
                   United States of America
                 </address>

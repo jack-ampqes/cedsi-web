@@ -124,9 +124,9 @@ export function Contact() {
             <address className="text-muted-foreground not-italic">
               Controls &amp; Electrical Design Services, Inc.
               <br />
-              132 Westchester Drive, Suite A
+              616 Church St NE
               <br />
-              Madison, Alabama 35758
+              Decatur, Alabama 35601
             </address>
 
             <div className="space-y-4 border-t border-border pt-4">

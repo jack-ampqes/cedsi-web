@@ -28,7 +28,6 @@ const footerLinks = {
   ],
   company: [
     { label: "About Us", href: "/#about", external: false },
-    { label: "Projects", href: "/#projects", external: false },
     { label: "Contact", href: "/#contact", external: false },
     {
       label: "AMP Engineering Services",

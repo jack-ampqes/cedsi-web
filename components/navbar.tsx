@@ -35,7 +35,6 @@ import { cn } from "@/lib/utils"
 const sectionLinks = [
   { href: "/#services", label: "Services" },
   { href: "/#about", label: "About" },
-  { href: "/#projects", label: "Projects" },
   { href: "/#contact", label: "Contact" },
 ] as const
 

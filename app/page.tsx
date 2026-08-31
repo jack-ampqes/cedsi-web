@@ -2,7 +2,6 @@ import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"
 import { About } from "@/components/about"
 import { Industries } from "@/components/industries"
-import { Projects } from "@/components/projects"
 import { Contact } from "@/components/contact"
 import { HashScrollHandler } from "@/components/hash-scroll-handler"
 
@@ -18,7 +17,6 @@ export default function HomePage() {
       <Services />
       <About />
       <Industries />
-      <Projects />
       <Contact />
     </main>
   )

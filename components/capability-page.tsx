@@ -19,6 +19,11 @@ export function CapabilityPage({ slug }: { slug: CapabilitySlug }) {
     threshold: 0.1,
   })
 
+  const [galleryRef, galleryInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
   const [gridRef, gridInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -61,6 +66,43 @@ export function CapabilityPage({ slug }: { slug: CapabilitySlug }) {
           </motion.p>
         </div>
       </section>
+
+      {/* Work gallery */}
+      {data.gallery && data.gallery.length > 0 && (
+        <section className="pb-16 lg:pb-20 relative">
+          <div className="container mx-auto px-4 lg:px-8">
+            <motion.div
+              ref={galleryRef}
+              initial={{ opacity: 0 }}
+              animate={galleryInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="text-sm text-muted-foreground mb-6 uppercase tracking-wider">
+                Recent Work
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                {data.gallery.map((item, index) => (
+                  <motion.div
+                    key={item.src}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={galleryInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group relative aspect-4/3 overflow-hidden border border-border bg-secondary/30"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Highlights */}
       <section className="pb-24 lg:pb-32 relative">

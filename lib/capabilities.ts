@@ -24,12 +24,18 @@ export type CapabilityHighlight = {
   description: string
 }
 
+export type CapabilityGalleryItem = {
+  src: string
+  alt: string
+}
+
 export type CapabilityData = {
   slug: string
   title: string
   subtitle: string
   overview: string
   highlights: CapabilityHighlight[]
+  gallery?: CapabilityGalleryItem[]
   vendors?: { src: string; alt: string }[]
   metaTitle: string
   metaDescription: string
@@ -148,6 +154,16 @@ export const capabilities = {
         title: "Factory Acceptance Testing",
         description:
           "Functional testing, I/O verification, and FAT documentation before panels ship to site.",
+      },
+    ],
+    gallery: [
+      {
+        src: "/panel-shop-plc-drive-panel.jpg",
+        alt: "Two-section industrial control panel with an Allen-Bradley ControlLogix PLC rack, wireway and terminal block fields, PowerFlex variable frequency drives, and a fused disconnect, staged on a pallet.",
+      },
+      {
+        src: "/panel-shop-vfd-panel.jpg",
+        alt: "Freestanding two-door industrial control panel containing a Yaskawa variable frequency drive, safety relay, distributed I/O, control transformer, and cooling fan.",
       },
     ],
     vendors: [
